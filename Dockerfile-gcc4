@@ -47,7 +47,7 @@ RUN apt-get update && apt-get upgrade --yes && \
   git submodule init && \
   git submodule update && \
   gild/bin/gild clone && \
-  echo "4.9 releases/gcc-4.9.3 http://ftp.gnu.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2" >gcc/series && \
+  echo -e "4.9\treleases/gcc-4.9.3\thttp://ftp.gnu.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2" >gcc/series && \
   gild/bin/gild checkout binutils 2.23.2 && \
   gild/bin/gild checkout gcc 4.9 \
   && \
