@@ -48,7 +48,7 @@ RUN apt-get update && apt-get upgrade --yes && \
   git submodule update && \
   gild/bin/gild clone && \
   gild/bin/gild checkout binutils 2.23.2 && \
-  gild/bin/gild checkout gcc 4 \
+  gild/bin/gild checkout gcc 4.9 \
   && \
   make -C native-build gcc-cross CROSS_PREFIX=/opt/adtools \
   && \
