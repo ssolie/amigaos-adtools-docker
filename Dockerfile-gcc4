@@ -1,5 +1,5 @@
 #
-# Dockerfile to build adtools cross-compiler
+# Dockerfile to build adtools GCC 4 cross-compiler
 #
 # The binaries will ultimately be found in /opt/adtools
 #
@@ -20,34 +20,38 @@ WORKDIR /work
 #
 # Perform all the steps in a single RUN to avoid creating file system layers.
 #
-# Note libmpc3 and libfl2 are not purged because they are needed to
-# run the cross-compiler.
-#
 RUN apt-get update && apt-get upgrade --yes && \
   apt-get install -y \
     git \
     python2.7 \
     make \
-    g++-8 \
-    libmpc3 \
-    libfl2 \
     libgmp-dev \
     libmpc-dev \
     libtool \
     flex \
+    bison \
     texinfo \
     wget \
     lhasa \
+	&& \
+  mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
+  echo "deb http://ftp.us.debian.org/debian/ jessie main contrib non-free" > /etc/apt/sources.list && \
+  echo "deb-src http://ftp.us.debian.org/debian/ jessie main contrib non-free" >> /etc/apt/sources.list && \
+  apt-get update && \
+  apt-get install -y g++-4.9 && \
+  mv /etc/apt/sources.list.bak /etc/apt/sources.list && \
   && \
   ln -s /usr/bin/python2.7 /usr/bin/python && \
-  ln -s /usr/bin/g++-8 /usr/bin/g++ \
+  ln -s /usr/bin/g++-4.9 /usr/bin/g++ && \
+  rm /usr/bin/gcc && \
+  ln -s /usr/bin/gcc-4.9 /usr/bin/gcc \
   && \
   git config --global user.email me@github.com && \
   git clone https://github.com/sba1/adtools . && \
   git submodule init && \
   git submodule update && \
+  echo -e "4.9\treleases/gcc-4.9.3\thttp://ftp.gnu.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2" > gcc/series && \
   gild/bin/gild clone && \
-  echo -e "4.9\treleases/gcc-4.9.3\thttp://ftp.gnu.org/gnu/gcc/gcc-4.9.3/gcc-4.9.3.tar.bz2" >gcc/series && \
   gild/bin/gild checkout binutils 2.23.2 && \
   gild/bin/gild checkout gcc 4.9 \
   && \
@@ -62,16 +66,16 @@ RUN apt-get update && apt-get upgrade --yes && \
     git \
     python2.7 \
     make \
-    g++-8 \
     libgmp-dev \
     libmpc-dev \
     libtool \
     flex \
+    bison \
     texinfo \
     wget \
     lhasa \
+    g++-4.9 \
   && \
   apt-get --assume-yes autoremove && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
-
