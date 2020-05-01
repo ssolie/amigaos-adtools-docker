@@ -39,7 +39,7 @@ RUN apt-get update && apt-get upgrade --yes && \
   echo "deb-src http://ftp.us.debian.org/debian/ jessie main contrib non-free" >> /etc/apt/sources.list && \
   apt-get update && \
   apt-get install -y g++-4.9 && \
-  mv /etc/apt/sources.list.bak /etc/apt/sources.list && \
+  mv /etc/apt/sources.list.bak /etc/apt/sources.list \
   && \
   ln -s /usr/bin/python2.7 /usr/bin/python && \
   ln -s /usr/bin/g++-4.9 /usr/bin/g++ && \
