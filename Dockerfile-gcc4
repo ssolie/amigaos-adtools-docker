@@ -33,7 +33,7 @@ RUN apt-get update && apt-get upgrade --yes && \
     texinfo \
     wget \
     lhasa \
-	&& \
+  && \
   mv /etc/apt/sources.list /etc/apt/sources.list.bak && \
   echo "deb http://ftp.us.debian.org/debian/ jessie main contrib non-free" > /etc/apt/sources.list && \
   echo "deb-src http://ftp.us.debian.org/debian/ jessie main contrib non-free" >> /etc/apt/sources.list && \
